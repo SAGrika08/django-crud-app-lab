@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{% static 'css/home.css' %}"
+/>
+{% endblock %} {% block content %}
+
+<section class="logo-container">
+  <div class="plant-container">
+    <img
+      src="{% static 'images/flat.svg' %}"
+      alt="The Plant Collector Plant"
+    />
+  </div>
+  <div class="logotype">
+  <img
+    src="{% static 'images/logotype.svg' %}"
+    alt="Text reads: Plant Planet"
+  />
+  </div>
+</section>
+
+{% endblock %}
