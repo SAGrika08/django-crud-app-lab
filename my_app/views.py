@@ -1,21 +1,5 @@
 from django.shortcuts import render
-
-# views.py
-
-class Plant:
-    def __init__(self, name, species, description, age):
-        self.name = name
-        self.species = species
-        self.description = description
-        self.age = age
-
-# Create a list of Plant instances
-plants = [
-    Plant('Aloe', 'aloe vera', 'Low maintenance succulent.', 3),
-    Plant('Fern', 'boston fern', 'Loves humidity.', 0),
-    Plant('Rose', 'rose', 'Beautiful flowering plant.', 4),
-    Plant('Bamboo', 'lucky bamboo', 'Grows quickly indoors.', 6)
-]
+from .models import Plant
 
 # Create your views here.
 def home(request):
@@ -26,5 +10,10 @@ def about(request):
     return render(request, 'about.html')
 
 def plant_index(request):
+    plants = Plant.objects.all()
     return render(request, 'plants/index.html', {'plants': plants})
+
+def plant_detail(request, plant_id):
+    plant = Plant.objects.get(id=plant_id)
+    return render(request, 'plants/details.html', {'plant': plant})
 
