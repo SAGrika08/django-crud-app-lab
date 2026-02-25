@@ -1,0 +1,51 @@
+{% load static %}
+<div class="feedings-toy-container">
+  <section class="feedings">
+    <div class="subsection-title">
+      <h2>Watering</h2>
+      <img
+        src="{% static 'images/cat-cone.svg' %}"
+        alt="An ice cream cone cat"
+      />
+      <img src="{% static 'images/cat-onigiri.svg' %}" alt="A cat as onigiri" />
+      <img
+        src="{% static 'images/kitty-kabob.svg' %}"
+        alt="A kabob of kittens"
+      />
+    </div>
+    <h3>Add a Watering</h3>
+    <form action="{% url 'add-watering' plant.id %}" method="post" class="subsection-content">
+      {% if plant.water_for_today %}
+  <p class="fed">{{plant.name}} has been watered all times for today!</p>
+  {% else %}
+  <p class="unfed">{{plant.name}} might be thirsty!</p>
+  {% endif %} 
+        {% csrf_token %} 
+       {{ watering_form.as_p }}
+     <button type="submit" class="btn submit">Add Watering</button>
+    </form>
+<h3>Past Watering</h3>
+{% if plant.watering_set.all.count %}
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time of Day</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for watering in plant.watering_set.all %}
+      <tr>
+        <td>{{watering.date}}</td>
+        <td>{{watering.get_time_of_day_display}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="subsection-content">
+    <p>⚠️ {{plant.name}} has not been watered!</p>
+  </div>
+{% endif %}
+  </section>
+</div>

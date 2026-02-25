@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/fertilizer/fertilizer-index.css' %}" />
+{% endblock %} 
+{% block content %}
+
+<section class="page-header">
+  <h1>All Plant Fertilizers</h1>
+  <img src="{% static 'images/string.svg' %}" alt="A ball of string" />
+  <img src="{% static 'images/mouse.svg' %}" alt="A mouse" />
+  <img src="{% static 'images/post.svg' %}" alt="A scratching post" />
+  <img src="{% static 'images/fish.svg' %}" alt="A fishy toy" />
+</section>
+
+<section class="card-container">
+  {% for fertilizer in fertilizer_list %}
+    <div class="card" style="border-color: {{ fertilizer.color }}">
+      <div class="card-bg" style="background-color: {{ fertilizer.color }}"></div>
+      <a href="{% url 'fertilizer-detail' fertilizer.id %}">
+        <div class="card-content">
+          <h2>{{ fertilizer.name }}</h2>
+           <p> {{ fertilizer.get_fert_type_display }} fertilizer</p>
+          <p>A {{ fertilizer.color }} fertilizer</p>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

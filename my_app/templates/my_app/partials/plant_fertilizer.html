@@ -1,0 +1,50 @@
+{% load static %}
+<section class="toys">
+  <div class="subsection-title">
+    <h2>Fertilizer</h2>
+    <img src="{% static 'images/string.svg' %}" alt="A ball of string" />
+    <img src="{% static 'images/mouse.svg' %}" alt="A mouse" />
+    <img src="{% static 'images/fish.svg' %}" alt="A fishy toy" />
+  </div>
+
+  <h3>{{ plant.name }}'s Fertilizers</h3>
+  <div class="subsection-content">
+    {% if plant.fertilizers.count %} 
+      {% for fertilizer in plant.fertilizers.all %}
+        <div class="toy-container">
+          <div class="color-block" style="background-color: {{ fertilizer.color }}"></div>
+          <a href="{% url 'fertilizer-detail' fertilizer.id %}">
+            <p>{{ fertilizer.get_fert_type_display }} {{ fertilizer.name }}</p>
+          </a>
+          <form action="{% url 'remove-fertilizer' plant.id fertilizer.id %}" method="post">
+       {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Remove </button>
+</form>
+
+        </div>
+      {% endfor %} 
+    {% else %}
+      <p class="no-toys">{{plant.name}} doesn't have any fertilizer!</p>
+    {% endif %}
+  </div>
+
+  <h3>Available Fertilizer</h3>
+  <div class="subsection-content">
+  {% if fertilizers.count %} 
+    {% for fertilizer in fertilizers %}
+      <div class="toy-container">
+        <div class="color-block" style="background-color: {{ fertilizer.color }}"></div>
+        <a href="{% url 'fertilizer-detail' fertilizer.id %}">
+          <p>{{ fertilizer.get_fert_type_display }} {{ fertilizer.name }}</p>
+        </a>
+        <form action="{% url 'associate-fertilizer' plant.id fertilizer.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn submit">Give</button>
+        </form>
+      </div>
+    {% endfor %} 
+  {% else %}
+    <p class="all-toys">{{plant.name}} already has been given all the available fertilizers 🥳</p>
+  {% endif %}
+</div>
+</section>
